@@ -1,6 +1,8 @@
 package project;
 
 public class CodeAccessException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * No-argument constructor needed for serialization
 	 */

@@ -138,7 +138,8 @@ public class MyAssembler {
 					if (line.trim().matches(".+:")) {
 						String[] split = line.split(":");
 						String lName = split[0];
-						if (isHexadecimal(lName)) throw new CompilerException("Bad label name: " + lName, in, sourceLineNum);
+						if (isHexadecimal(lName))
+							throw new CompilerException("Bad label name: " + lName, in, sourceLineNum);
 						if (lName.equals("main")) {
 							mainLine = lineNum;
 						}
@@ -161,9 +162,8 @@ public class MyAssembler {
 				int data = (int) o[0];
 				int off = (int) o[1];
 				/*
-				 * lodi data
-				 * sto off
-				 * */
+				 * lodi data sto off
+				 */
 				int opCode = getInstruction("LODI");
 				instructions.add(combine(opCode, data));
 
@@ -189,7 +189,8 @@ public class MyAssembler {
 
 					if (split.length == 1) {
 						if (!InstructionMap.noArgument.contains(split[0].toUpperCase())) {
-							throw new CompilerException(split[0].toUpperCase() + " must have an argument", in, sourceLineNum);
+							throw new CompilerException(split[0].toUpperCase() + " must have an argument", in,
+									sourceLineNum);
 						} else {
 							split = Arrays.copyOf(split, 2);
 							split[1] = "0";
@@ -199,7 +200,8 @@ public class MyAssembler {
 					if (split[1].startsWith("#")) {
 						split[0] = split[0].toUpperCase();
 						if (!InstructionMap.immediateOK.contains(split[0])) {
-							throw new CompilerException("Immediate mode not supported by " + split[0], in, sourceLineNum);
+							throw new CompilerException("Immediate mode not supported by " + split[0], in,
+									sourceLineNum);
 						}
 						split[1] = split[1].substring(1);
 						if (split[0].equals("JUMP")) {
@@ -212,7 +214,8 @@ public class MyAssembler {
 					} else if (split[1].startsWith("&")) {
 						split[0] = split[0].toUpperCase();
 						if (!InstructionMap.indirectOK.contains(split[0])) {
-							throw new CompilerException("Indirect mode not supported by " + split[0], in, sourceLineNum);
+							throw new CompilerException("Indirect mode not supported by " + split[0], in,
+									sourceLineNum);
 						}
 						split[1] = split[1].substring(1);
 						if (split[0].equals("JUMP")) {
@@ -234,7 +237,8 @@ public class MyAssembler {
 					}
 
 					opCode = (getInstruction(split[0]));
-					if (opCode == -1) throw new CompilerException("Unknown instruction: " + split[0], in, sourceLineNum);
+					if (opCode == -1)
+						throw new CompilerException("Unknown instruction: " + split[0], in, sourceLineNum);
 					res = combine(opCode, arg);
 					instructions.add(res);
 					lineNum++;
